@@ -12,6 +12,13 @@ BuildRequires: systemd-rpm-macros
 %{?systemd_requires}
 
 Source0:  https://github.com/kitsunyan/intel-undervolt/archive/%{commit}/%{name}-%{shortcommit}.tar.gz  
+%description
+intel-undervolt is a tool for undervolting and throttling limits alteration for
+Intel CPUs.
+
+Undervolting works on Haswell and newer CPUs and based on the content of [this
+article](https://github.com/mihic/linux-intel-undervolt).
+
 %prep
 %autosetup -n intel-undervolt-%{commit}
 
