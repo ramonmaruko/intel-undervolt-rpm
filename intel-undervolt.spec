@@ -8,7 +8,7 @@ Summary: A tool for undervolting and throttling limits alteration for Intel CPUs
 License: GPLv3
 ExclusiveArch: x86_64
 
-BuildRequires: systemd-rpm-macros
+BuildRequires: gcc systemd-rpm-macros
 %{?systemd_requires}
 
 Source0:  https://github.com/kitsunyan/intel-undervolt/archive/%{commit}/%{name}-%{shortcommit}.tar.gz  
@@ -23,7 +23,7 @@ article](https://github.com/mihic/linux-intel-undervolt).
 %autosetup -n intel-undervolt-%{commit}
 
 %build
-make %{?_smp_mflags}
+make %{?_smp_mflags} CFLAGS="%{optflags}" LDFLAGS="%{build_ldflags}" 
 
 %install
 make DESTDIR=%{buildroot} BINDIR=%{_bindir} SYSCONFDIR=%{_sysconfdir} UNITDIR=%{_unitdir} install
