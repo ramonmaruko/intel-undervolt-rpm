@@ -1,6 +1,6 @@
 Name: intel-undervolt
 Version: 1.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A tool for undervolting and throttling limits alteration for Intel CPUs
 License: GPLv3
 ExclusiveArch: x86_64
@@ -21,11 +21,11 @@ article](https://github.com/mihic/linux-intel-undervolt).
 %autosetup -n %{name}-%{version}
 
 %build
-%configure --enable-systemd
-make %{?_smp_mflags} CFLAGS="%{optflags}" LDFLAGS="%{build_ldflags}" 
+%configure --enable-systemd --unitdir=%{_unitdir}
+%make_build CFLAGS="%{optflags}" LDFLAGS="%{build_ldflags}" 
 
 %install
-make DESTDIR=%{buildroot} BINDIR=%{_bindir} SYSCONFDIR=%{_sysconfdir} UNITDIR=%{_unitdir} install
+%make_install
 
 %files
 %{_bindir}/intel-undervolt
@@ -35,6 +35,10 @@ make DESTDIR=%{buildroot} BINDIR=%{_bindir} SYSCONFDIR=%{_sysconfdir} UNITDIR=%{
 %config(noreplace) %{_sysconfdir}/intel-undervolt.conf
 
 %changelog
+* Wed Oct 30 2019 Ramon Marco Layam Navarro <marco@ramonmarco.codes> 1.7-2
+- Use make_build and make_install macros
+- Add unitdir to configure
+
 * Wed Oct 30 2019 Ramon Marco Layam Navarro <marco@ramonmarco.codes> 1.7-1
 - Add configure call
 - Add intel-undervolt.conf as config file
